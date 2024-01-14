@@ -13,7 +13,7 @@ services:
         - SETGID
         - SETUID
   catalog:
-        image: gcr.io/vmwarecloudadvocacy/acmeshop-catalog:1.2.1
+        image: gcr.io/vmwarecloudadvocacy/acmeshop-catalog:latest
         hostname: catalog
         restart: always
         ports:
@@ -55,7 +55,7 @@ services:
       ports:
         - '6379'
   user:
-       image: gcr.io/vmwarecloudadvocacy/acmeshop-user:2.0.1
+       image: gcr.io/vmwarecloudadvocacy/acmeshop-user:latest
        hostname: user
        restart: always
        ports:
@@ -68,9 +68,9 @@ services:
            - USERS_DB_HOST=user-db
            - USERS_DB_PORT=27017
            - USERS_PORT=8083
-           - REDIS_DB_HOST=user-redis-db
-           - REDIS_DB_PORT=6379
-           - REDIS_DB_PASSWORD=secret
+           - REDIS_HOST=user-redis-db
+           - REDIS_PORT=6379
+           - REDIS_PASSWORD=secret
            - JAEGER_AGENT_HOST=jaeger
            - JAEGER_AGENT_PORT=6831
   redis-db:
@@ -82,7 +82,7 @@ services:
       ports:
           - '6379:6379'
   cart:
-      image: gcr.io/vmwarecloudadvocacy/acmeshop-cart:1.3.1
+      image: gcr.io/vmwarecloudadvocacy/acmeshop-cart:latest
       hostname: cart
       restart: always
       environment:
@@ -100,7 +100,7 @@ services:
       depends_on:
           - redis-db
   front-end:
-       image: gcr.io/vmwarecloudadvocacy/acmeshop-front-end:2.2.0
+       image: gcr.io/vmwarecloudadvocacy/acmeshop-front-end:latest
        hostname: front-end
        restart: always
        ports:
@@ -120,7 +120,7 @@ services:
            - JAEGER_AGENT_HOST=jaeger
            - JAEGER_AGENT_PORT=6832
   jaeger:
-      image: jaegertracing/all-in-one:1.11
+      image: jaegertracing/all-in-one:latest
       hostname: jaeger
       restart: always
       ports:
@@ -140,7 +140,7 @@ services:
         - POSTGRES_USER=postgres
         - POSTGRES_DB=postgres
   order:
-      image: gcr.io/vmwarecloudadvocacy/order-postgres-tracing:3.0
+      image: gcr.io/vmwarecloudadvocacy/order-postgres-tracing:latest
       hostname: order
       restart: always
       ports:
@@ -162,7 +162,7 @@ services:
       depends_on:
         - postgres
   payment:
-       image: gcr.io/vmwarecloudadvocacy/acmeshop-payment:4.6
+       image: gcr.io/vmwarecloudadvocacy/acmeshop-payment:latest
        hostname: payment
        restart: always
        ports:
